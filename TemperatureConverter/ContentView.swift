@@ -9,11 +9,29 @@ import SwiftUI
 
 struct ContentView: View {
     @State var temperatureInCelsius = 10.0
-    @State var feedback = ""
+    var feedback: String {
+        if temperatureInCelsius < -20 {
+            return "Dress very warmly!"
+        }
+        else if temperatureInCelsius < 0 {
+            return "Dress warmly!"
+        } else if temperatureInCelsius < 10 {
+            return "It's cold"
+        } else if temperatureInCelsius < 20 {
+            return "It is cool outside"
+        } else if temperatureInCelsius < 30 {
+            return "It's a bit hot outside"
+        }
+        else {
+            return "Stay inside or under a shadow to avoid heatstroke. Stay hydrated."
+        }
+    }
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
                 Text("Celsius")
+                    .bold()
+                
                 Slider(value: $temperatureInCelsius,
                        in: -50...50,
                        step: 1,
@@ -21,42 +39,27 @@ struct ContentView: View {
                     Text("Temperature in Celsius")
                 },
                        minimumValueLabel: {
-                    Text("-50°C")
+                    Text("-50.0°C")
                 },
                        maximumValueLabel: {
-                    Text("50°C")
+                    Text("50.0°C")
                 })
+                HStack {
+                    Spacer()
+                    Text("\(String(format: "%.1f", temperatureInCelsius))°C")
+                    Spacer()
+                }
+                Text("Fahrenheit")
+                    .bold()
+                HStack {
+                    Spacer()
+                    Text("\(String(format: "%.1f", temperatureInCelsius * 1.8 + 32))°F")
+                    Spacer()
+                }
+                Text(feedback)
+                    .italic()
             }
-            HStack {
-                Spacer()
-                Text("\(String(format: "%.1f", temperatureInCelsius))°C")
-                Spacer()
-            }
-            Text("Fahrenheit")
-            HStack {
-                Spacer()
-                Text("\(String(format: "%.1f", temperatureInCelsius * 1.8 + 32))°C")
-                Spacer()
-            }
-            if -50 <= temperatureInCelsius && temperatureInCelsius < -20 {
-                feedback = "Dress very warmly!"
-            }
-            if -20 <= temperatureInCelsius && temperatureInCelsius < 0 {
-                feedback = "Dress warmly!"
-            }
-            if 0 <= temperatureInCelsius && temperatureInCelsius < 10 {
-                feedback = "It's cold"
-            }
-            if 10 <= temperatureInCelsius && temperatureInCelsius < 20 {
-                feedback = "It is cool outside"
-            }
-            if 20 <= temperatureInCelsius && temperatureInCelsius < 30 {
-                feedback = "It's a bit hot outside"
-            }
-            if 30 <= temperatureInCelsius && temperatureInCelsius < 50 {
-                feedback = "Stay inside or under a shadow to avoid heatstroke!"
-            }
-            Text(feedback)
+            .padding()
         }
         .navigationTitle("Temperature Converter")
     }
