@@ -13,18 +13,19 @@ struct ContentView: View {
         if temperatureInCelsius < -20 {
             return "Dress very warmly!"
         }
-        else if temperatureInCelsius < 0 {
+        if temperatureInCelsius < 0 {
             return "Dress warmly!"
-        } else if temperatureInCelsius < 10 {
+        }
+        if temperatureInCelsius < 10 {
             return "It's cold"
-        } else if temperatureInCelsius < 20 {
+        }
+        if temperatureInCelsius < 20 {
             return "It is cool outside"
-        } else if temperatureInCelsius < 30 {
+        }
+        if temperatureInCelsius < 30 {
             return "It's a bit hot outside"
         }
-        else {
-            return "Stay inside or under a shadow to avoid heatstroke. Stay hydrated."
-        }
+        return "Stay inside or under a shadow to avoid heatstroke. Stay hydrated."
     }
     var body: some View {
         ScrollView {
